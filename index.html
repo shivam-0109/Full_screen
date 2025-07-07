@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fullscreen Page</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="content">Click the button to enter fullscreen mode.</div>
+  <button onclick="startFullscreen()">Enter Fullscreen</button>
+
+  <script>
+    function startFullscreen() {
+      const elem = document.documentElement;
+
+      elem.requestFullscreen().then(() => {
+        document.getElementById("content").innerText = "You are in fullscreen mode.";
+        document.querySelector("button").style.display = "none";
+      }).catch(err => {
+        alert("Fullscreen request failed: " + err.message);
+      });
+    }
+
+    document.addEventListener("fullscreenchange", () => {
+      if (!document.fullscreenElement) {
+        alert("You exited fullscreen. Closing or showing error...");
+        document.getElementById("content").innerText = "ERROR: You exited fullscreen!";
+        window.close(); // only works if this page was opened via JavaScript
+      }
+    });
+  </script>
+</body>
+</html>
